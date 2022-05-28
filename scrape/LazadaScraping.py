@@ -9,7 +9,7 @@ import json
 def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
 
     driver.get(url)
-    result = {'product_name':'','source':'lazada','reviews':[]}
+    result = {'product_name':'','avg_rating':0,'source':'lazada','reviews':[]}
     review_count = 0
     
     #click out pop up
@@ -26,6 +26,7 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         
         result['product_name'] = driver.find_element(By.CSS_SELECTOR, "[class='pdp-mod-product-badge-title']").text
+        result['avg_rating'] = driver.find_element(By.CSS_SELECTOR, "[class='score-average']").text
         product_reviews = driver.find_elements(By.CSS_SELECTOR,"[class='item']")
 
         # Get product review
@@ -38,7 +39,7 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
             review['name'] = details[0].text[3:]
             review['status'] = details[1].text
             review['date'] = product.find_element(By.CSS_SELECTOR, "[class='title right']").text
-            review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[class='star']"))
+            review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[src='//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png']"))
             review['review'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
             if review != "" or review.strip():
                 # print(review, "\n")
@@ -59,8 +60,8 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
 
 if __name__ == '__main__':
 
-    # driver = webdriver.Chrome()
-    driver = webdriver.Edge()
+    driver = webdriver.Chrome()
+    #driver = webdriver.Edge()
     url = r'https://www.lazada.vn/products/dien-thoai-apple-iphone-13-pro-max-128gb-i1522497182-s6393590575.html?search=1&spm=a2o4n.searchlistcategory.list.i72.75bf3a1fbXB2jM'
     test = scrape_lazada(driver, url, 4)
     driver.close()
