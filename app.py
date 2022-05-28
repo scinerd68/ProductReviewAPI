@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_restful import Resource, Api
 from scrape.sendo_scrape import scrape_sendo
 from selenium import webdriver
@@ -14,12 +14,15 @@ def home():
     return render_template('index.html')
 
 class GetReview(Resource):
-    def get(self, url: str):
+    def put(self):
+        # TODO: sendo has global start variable in scrape function causing bug
+        url = request.form['url']
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
-        result = scrape_sendo(driver, url, max_review_num=5, verbose=True)
-        return result
+        result = scrape_sendo(driver=driver, url=url, max_review_num=5, verbose=True)
+        driver.quit()
+        return url
 
 api.add_resource(GetReview, '/review')
 
