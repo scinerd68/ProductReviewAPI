@@ -9,7 +9,7 @@ import json
 def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
 
     driver.get(url)
-    result = {'product_name':'','avg_rating'=0,'source':'lazada','reviews':[]}
+    result = {'product_name':'','avg_rating':0,'source':'lazada','reviews':[]}
     review_count = 0
     
     #click out pop up
