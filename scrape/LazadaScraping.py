@@ -60,8 +60,8 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
 
 if __name__ == '__main__':
 
-    # driver = webdriver.Chrome()
-    driver = webdriver.Edge()
+    driver = webdriver.Chrome()
+    #driver = webdriver.Edge()
     url = r'https://www.lazada.vn/products/dien-thoai-apple-iphone-13-pro-max-128gb-i1522497182-s6393590575.html?search=1&spm=a2o4n.searchlistcategory.list.i72.75bf3a1fbXB2jM'
     test = scrape_lazada(driver, url, 4)
     driver.close()
