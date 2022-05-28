@@ -9,8 +9,9 @@ import json
 def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
 
     driver.get(url)
-    result = {'reviews':[]}
-
+    result = {'product_name':'','source':'lazada','reviews':[]}
+    review_count = 0
+    
     #click out pop up
     time.sleep(sleep_time_unit*2)
     ac = ActionChains(driver)
@@ -23,7 +24,8 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
         time.sleep(sleep_time_unit*2)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
+        
+        result['product_name'] = driver.find_element(By.CSS_SELECTOR, "[class='pdp-mod-product-badge-title']").text
         product_reviews = driver.find_elements(By.CSS_SELECTOR,"[class='item']")
 
         # Get product review
@@ -31,11 +33,13 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
             review = {}
             details = product.find_element(By.CSS_SELECTOR, "[class='middle']")
             details= details.find_elements(By.TAG_NAME,'span')
+            review['id']=review_count
+            review_count +=1
             review['name'] = details[0].text[3:]
             review['status'] = details[1].text
             review['date'] = product.find_element(By.CSS_SELECTOR, "[class='title right']").text
             review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[class='star']"))
-            review['content'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
+            review['review'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
             if review != "" or review.strip():
                 # print(review, "\n")
                 result['reviews'].append(review)
