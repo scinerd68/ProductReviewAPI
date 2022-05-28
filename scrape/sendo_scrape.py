@@ -139,7 +139,6 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
 
     # get the page
     driver.get(url)
-    print("Time taken: ", time.time() - start)
     for check_num in range(1, review_check_num + 1):
         logging.info(f"Check if the reviews are present, try number: {check_num}")
         # check for alert
