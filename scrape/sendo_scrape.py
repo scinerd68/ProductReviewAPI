@@ -15,8 +15,9 @@ STAR_RATING_CONVERT = {
     "d7e-4e4dcb d7e-9ac674" : 2,
     "d7e-4e4dcb d7e-fede87" : 1
     }
-
 CHROME_DRIVER_PATH = "/home/viet/OneDrive/Studying Materials/Introduction to Data Science/EDA Project/chromedriver_linux64/chromedriver"
+REVIEW_COUNTER = 0
+
 
 def check_reply(review):
     """
@@ -30,7 +31,7 @@ def scrape_from_review_list(review_list, result, max_review_num):
     """
     Scrape from the given list of reviews and store in result
     """
-
+    global REVIEW_COUNTER
     for cur_review in review_list:
         if check_reply(cur_review):
             continue
@@ -55,6 +56,7 @@ def scrape_from_review_list(review_list, result, max_review_num):
         logging.info(f"Got rating: {rating}")
 
         # store the features into cur_review_dict
+        cur_review_dict["id"] = REVIEW_COUNTER
         cur_review_dict["name"] = name
         cur_review_dict["date"] = date
         cur_review_dict["content"] = content
@@ -63,6 +65,9 @@ def scrape_from_review_list(review_list, result, max_review_num):
         # add this customer's review to result
         result["reviews"].append(cur_review_dict)
         logging.info(f"Added customer {name}'s review")
+
+        # increment REVIEW_COUNTER
+        REVIEW_COUNTER += 1
         
         logging.info("Number of reviews scraped: {}".format(len(result["reviews"])))
         # stop if the number of records exceeds the maxinum number
@@ -134,7 +139,6 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
 
     # get the page
     driver.get(url)
-    print("Time taken: ", time.time() - start)
     for check_num in range(1, review_check_num + 1):
         logging.info(f"Check if the reviews are present, try number: {check_num}")
         # check for alert
@@ -163,7 +167,9 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
 
         # create a dictionary to store review information
         result = {
-            "total" : None, 
+            "product_name": None,
+            "total" : None,
+            "source" : "sendo",
             "reviews" : []
         }
         
@@ -173,6 +179,11 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
 
         # cook soup
         soup = BeautifulSoup(driver.page_source, features="lxml")
+
+        # get product's name
+        product_name = soup.find(class_="d7e-ed528f d7e-7dcda3 d7e-f56b44 d7e-fb1c84 undefined").text
+        result["product_name"] = product_name
+        logging.info(f"Got product's name: {product_name}")
 
         # cumulative rating
         total = soup.find(class_="_39a-7b5c89").text
@@ -217,6 +228,7 @@ if __name__ == "__main__":
     start = time.time()
     driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
     result = scrape_sendo(driver, url[2], max_review_num=5, verbose=True)
+    driver.quit()
     print("Time taken: ", time.time() - start)
     pretty = json.dumps(result, indent=4, ensure_ascii=False)
     print(pretty)
