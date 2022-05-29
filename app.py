@@ -16,6 +16,7 @@ def home():
 class GetReview(Resource):
     def put(self):
         # TODO: sendo has global start variable in scrape function causing bug
+        # TODO: Switch to GET request and parse request.args
         url = request.form['url']
         chrome_options = Options()
         chrome_options.add_argument("--headless")
