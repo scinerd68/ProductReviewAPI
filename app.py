@@ -41,8 +41,8 @@ class GetReview(Resource):
             result = scrape_sendo(driver=driver, url=url, max_review_num=5, verbose=True)
         elif site == 'lazada':
             result = scrape_lazada(driver, url, 4)
-        # elif site == 'tiki':
-        #     result = scrape_tiki(driver, url, json_file)        
+        elif site == 'tiki':
+            result = scrape_tiki(driver, url)        
 
         driver.quit()
         return result

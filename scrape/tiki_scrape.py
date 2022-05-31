@@ -11,7 +11,7 @@ import codecs
 CHROME_DRIVER_PATH = "D:/chromedriver.exe"
 
 
-def scrape_tiki(driver, url, json_file, review_wait_time=10):
+def scrape_tiki(driver, url, review_wait_time=10):
     RATING_DICT = {
         "Rất không hài lòng": 1,
         "Không hài lòng": 2,
