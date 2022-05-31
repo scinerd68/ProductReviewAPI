@@ -36,9 +36,12 @@ def scrape_tiki(driver, url, json_file, review_wait_time=10):
 
     # cook soup
     soup = BeautifulSoup(driver.page_source, features="lxml")
-    reviews = soup.findAll("div", class_="review-comment__content")
+    reviews = soup.find_all("div", class_="review-comment__content")
+
+    product_name = soup.find_all("h1", class_="title")[0].text
 
     if reviews:
+        review_id = 0
         next_page_button = next_review_page(driver)
         while next_page_button:
             soup = BeautifulSoup(driver.page_source, features="lxml")
@@ -51,12 +54,14 @@ def scrape_tiki(driver, url, json_file, review_wait_time=10):
 
             for text, rating, buy_status, date, buyer_name in zip(texts, ratings, buy_statuses, dates, buyer_names):
                 review_dict = {
-                    "Comment": text.text,
-                    "Rating": RATING_DICT[rating.text],
-                    "Buy status": BUY_STATUS_DICT.get(buy_status.text, False),
-                    "Comment date": extract_comment_date(date.text),
-                    "Buyer name": buyer_name.text.strip()
+                    "id": review_id,
+                    "review": text.text,
+                    "rating": RATING_DICT[rating.text],
+                    "buy_status": BUY_STATUS_DICT.get(buy_status.text, False),
+                    "review_date": extract_comment_date(date.text),
+                    "buyer_name": buyer_name.text.strip()
                 }
+                review_id += 1
                 results.append(review_dict)
                 print(review_dict)
             try:
@@ -66,8 +71,14 @@ def scrape_tiki(driver, url, json_file, review_wait_time=10):
                 print("No button :(")
                 break
     results = remove_dup(results)
-    with codecs.open(json_file, 'w', encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False)
+    results = {
+        "product_name": product_name,
+        "source": "tiki",
+        "reviews": results
+    }
+    # with codecs.open(json_file, 'w', encoding="utf-8") as f:
+    #     json.dump(results, f, ensure_ascii=False)
+    print(results)
     return results
 
 
