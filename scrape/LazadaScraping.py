@@ -6,7 +6,7 @@ import time
 from selenium.webdriver.common.action_chains import ActionChains
 import json
 
-def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.5):
+def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.2):
 
     driver.get(url)
     result = {'product_name':'','avg_rating':0,'source':'lazada','reviews':[]}
