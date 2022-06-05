@@ -5,8 +5,6 @@ from scrape.sendo_scrape import scrape_sendo
 from scrape.tiki_scrape import scrape_tiki
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-# from models.device import DeviceModel
-# from security import api_required
 from flask_sqlalchemy import SQLAlchemy
 
 import functools
@@ -17,7 +15,7 @@ CHROME_DRIVER_PATH = "D:/chromedriver.exe"
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_ECHO'] = True
-app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.sqlite3'
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///devices.sqlite3'
 db = SQLAlchemy(app)
 api = Api(app)
 
