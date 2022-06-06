@@ -5,91 +5,19 @@ from scrape.sendo_scrape import scrape_sendo
 from scrape.tiki_scrape import scrape_tiki
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from flask_sqlalchemy import SQLAlchemy
-
-import functools
-import uuid
-
+from db import db
+from models.device import DeviceModel
+from security import api_required
 
 CHROME_DRIVER_PATH = "D:/chromedriver.exe"
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_ECHO'] = True
-app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///devices.sqlite3'
-db = SQLAlchemy(app)
 api = Api(app)
+app.config['SQLALCHEMY_ECHO'] = True
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+db.init_app(app)
 
 
-'''
-################################################################################
-############################### DB MODELS ######################################
-################################################################################
-'''
-class DeviceModel(db.Model):
-    __tablename__ = 'devices'
-
-    id = db.Column(db.Integer, primary_key=True)
-    device_name = db.Column(db.String(80))
-    device_key = db.Column(db.String(80))
-
-
-    def __init__(self, device_name, device_key=None):
-        self.device_name = device_name
-        self.device_key = device_key or uuid.uuid4().hex
-
-    def json(self):
-        return {
-            'device_name': self.device_name,
-            'device_key': self.device_key,
-        }
-
-    @classmethod
-    def find_by_name(cls, device_name):
-        return cls.query.filter_by(device_name=device_name).first()
-
-    @classmethod
-    def find_by_device_key(cls, device_key):
-        return cls.query.filter_by(device_key=device_key).first()
-
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()
-
-'''
-################################################################################
-############################### SECURITY #######################################
-################################################################################
-'''
-
-def is_valid(api_key):
-    device = DeviceModel.find_by_device_key(device_key = api_key)
-    if device:
-        return True
-
-def api_required(func):
-    @functools.wraps(func)
-    def decorator(*args, **kwargs):
-
-        if "api_key" in request.args:
-            api_key = request.args["api_key"]
-        else:
-            return {"message": "Please provide an API key"}, 400
-        # Check if API key is correct and valid
-        if request.method == "GET" and is_valid(api_key):
-            return func(*args, **kwargs)
-        else:
-            return {"message": "The provided API key is not valid"}, 403
-    return decorator
-
-'''
-################################################################################
-######################## ROUTES & ENDPOINTS ####################################
-################################################################################
-'''
 @app.route("/")
 def home():
     return render_template('index.html')
@@ -144,5 +72,6 @@ api.add_resource(AddDevice, '/new_api_key')
 api.add_resource(GetReview, '/review')
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

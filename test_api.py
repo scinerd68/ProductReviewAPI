@@ -20,8 +20,7 @@ url = r'https://www.lazada.vn/products/dien-thoai-apple-iphone-13-pro-max-128gb-
 # result = requests.get("http://localhost:5000/review", params={"api_key":bs_api_key, "url": url, "site": "lazada"})
 # # legit_api_key = result.json()['api_key']
 
-# #TEST SCRAPING
-#
+#TEST SCRAPING
 result = requests.get("http://localhost:5000/review", params={"api_key":legit_api_key, "url": url, "site": "lazada"})
 
 
