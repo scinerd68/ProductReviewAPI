@@ -20,9 +20,21 @@
   <div class="homepage">
     <h1>Product Review API</h1>
     <p>An API to easily get review of a product on multiple websites like Tiki, Shopee, Lazada, Sendo</p>
-    <div class="search-bar">
-      <input placeholder="Type a product name">
-    </div>
+    <form id="search-form" action="/review" method="get">
+      <div class="search-bar">
+        <input placeholder="Type an url" name="url">
+      </div>
+      <div class="select-site">
+        <select name="site">
+          <option value="tiki">Tiki</option>
+          <option value="sendo">Sendo</option>
+          <option value="lazada">Lazada</option>
+        </select>
+      </div>
+      <div class="submit-button">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
   </div>
   
 </body>
