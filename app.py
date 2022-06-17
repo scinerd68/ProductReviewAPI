@@ -5,9 +5,8 @@ from scrape.sendo_scrape import scrape_sendo
 from scrape.tiki_scrape import scrape_tiki
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from scrape.sendo_scrape import CHROME_DRIVER_PATH
 
-# CHROME_DRIVER_PATH = "D:/chromedriver.exe"
+CHROME_DRIVER_PATH = "D:/chromedriver.exe"
 
 app = Flask(__name__)
 api = Api(app)
