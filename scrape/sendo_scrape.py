@@ -168,13 +168,13 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
         # create a dictionary to store review information
         result = {
             "product_name": None,
-            "total" : None,
+            "average_rating" : None,
             "source" : "sendo",
             "reviews" : []
         }
         
-        # wait for cumulative rating to be loaded before cooking soup
-        cum = WebDriverWait(driver, review_wait_time).until(
+        # wait for average rating to be loaded before cooking soup
+        WebDriverWait(driver, review_wait_time).until(
                             EC.presence_of_element_located((By.CLASS_NAME, "_39a-7b5c89")))
 
         # cook soup
@@ -185,10 +185,10 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
         result["product_name"] = product_name
         logging.info(f"Got product's name: {product_name}")
 
-        # cumulative rating
-        total = soup.find(class_="_39a-7b5c89").text
-        result["total"] = total
-        logging.info(f"Got cumulative rating: {total}")
+        # average rating
+        avg = soup.find(class_="_39a-7b5c89").text
+        result["average_rating"] = avg
+        logging.info(f"Got average rating: {avg}")
 
         # get the reviews
         reviews = soup.find_all(class_="_39a-71cc39")
