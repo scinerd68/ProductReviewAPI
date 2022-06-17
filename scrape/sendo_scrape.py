@@ -1,5 +1,6 @@
 import json
 import logging
+from shutil import ExecError
 import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -123,22 +124,16 @@ def next_review_page(driver):
     return False
 
 
-def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wait_time=0.1, verbose=False):
+def scrape_sendo_by_url(driver, url, max_review_num, review_check_num, review_wait_time):
     """
-    Scrape users' reviews on Sendo website
+    Scrape users' reviews on Sendo website from a product url
     max_review_num: maxinmum number of reviews to scrape
     review_check_num: number of retries to scroll down and wait for the review section to load
     review_wait_time: waiting duration in each try
-    verbose: show running info
     """
-
-    if verbose:
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-    else:
-        logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s')
-
     # get the page
     driver.get(url)
+    review = None
     for check_num in range(1, review_check_num + 1):
         logging.info(f"Check if the reviews are present, try number: {check_num}")
         # check for alert
@@ -148,7 +143,7 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
         try:
             driver.execute_script("window.scrollTo(0,2000)")
             review = WebDriverWait(driver, review_wait_time).until(
-                            EC.presence_of_element_located((By.CLASS_NAME, "_39a-71cc39"))) # old value: 39a-673889
+                            EC.presence_of_element_located((By.CLASS_NAME, "_39a-71cc39")))
 
             # escape the loop if the element is present
             logging.info("Review section found")
@@ -159,8 +154,21 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
 
     # return None if cant find the reviews
     if not review:
-        logging.info("Review section not found")
-        return
+        logging.info("Review is not found, scraping product name only")
+        result = {
+            "product_name": None,
+            "average_rating" : None,
+            "source" : "sendo",
+            "reviews" : []
+        }
+
+        # cook soup
+        soup = BeautifulSoup(driver.page_source, features="lxml")
+
+        # get product's name
+        product_name = soup.find(class_="d7e-ed528f d7e-7dcda3 d7e-f56b44 d7e-fb1c84 undefined").text
+        result["product_name"] = product_name
+        logging.info(f"Got product's name: {product_name}")
 
     else:
         logging.info("Start scraping")
@@ -211,23 +219,69 @@ def scrape_sendo(driver, url, max_review_num=20, review_check_num=10, review_wai
                 break
             # time.sleep(1)
 
-        logging.info("Finished scraping")
-        return result
+    logging.info("Finished scraping")
+    return result
+
+
+def scrape_sendo(driver, input, product_num=3, max_review_num=20, review_check_num=10, review_wait_time=0.1, search_wait_time=5, verbose=False):
+    """
+    Scrape users' reviews on Sendo website from either a url or a product name specified in input
+    input: string containing a url or a product name
+    num_product: number of product to be scraped when the input is a product name
+    max_review_num: maxinmum number of reviews to scrape
+    review_check_num: number of retries to scroll down and wait for the review section to load
+    review_wait_time: waiting duration in each review wating attempt
+    search_wait_time: waiting duration for the product in the search page to be loaded
+    verbose: show running info
+    """
+    if verbose:
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+    else:
+        logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s')
+
+    if input.__contains__("sendo.vn"):
+        logging.info("Input is a url")
+        return scrape_sendo_by_url(driver, input, max_review_num, review_check_num, review_wait_time)
+    else:
+        logging.info("Input is a product name")
+        driver.get("https://www.sendo.vn/tim-kiem?q={}".format(input))
+        try:
+            WebDriverWait(driver, search_wait_time).until(
+                                EC.presence_of_element_located((By.CSS_SELECTOR, "a[href^=\"https://www.sendo.vn\"][target=_blank]")))
+            logging.info("Search page finished loading")
+        except Exception as e:
+            logging.error(e)
+
+        # cook soup
+        soup = BeautifulSoup(driver.page_source, features="lxml")
+
+        # get product
+        product_list = soup.find_all(class_="d7e-f7453d d7e-57f266")
+        
+        result_list = []
+        for i, product in enumerate(product_list):
+            if i == product_num:
+                break
+            product_url = product.contents[0]["href"]
+            result_list.append(scrape_sendo_by_url(driver, product_url, max_review_num, review_check_num, review_wait_time))
+        return result_list
 
 
 if __name__ == "__main__":
     url = [
         "https://www.sendo.vn/op-lung-iphone-6-plus-24661530.html?source_block_id=feed&source_page_id=home&source_info=desktop2_60_1653209392128_34e4536f-bc6a-4a91-9335-ace33da5bcc1_-1_ishyperhome0_0_57_22_-1", # 1 page
         "https://www.sendo.vn/combo-6-goi-khan-uot-khong-mui-unifresh-vitamin-e-khan-uot-tre-em-80-mienggoi-23796514.html?source_block_id=feed&source_page_id=home&source_info=desktop2_60_1653306028025_17f349b3-3df6-4ea5-9ae7-ae076bbd7e9b_-1_ishyperhome0_0_2_1_-1", # many pages
-        "https://www.sendo.vn/op-lung-iphone-6-plus-6s-plus-chong-soc-360-17878754.html?source_block_id=feed&source_page_id=home&source_info=desktop2_60_1653314071212_17f349b3-3df6-4ea5-9ae7-ae076bbd7e9b_-1_ishyperhome0_0_11_22_-1" # 2 pages
+        "https://www.sendo.vn/op-lung-iphone-6-plus-6s-plus-chong-soc-360-17878754.html?source_block_id=feed&source_page_id=home&source_info=desktop2_60_1653314071212_17f349b3-3df6-4ea5-9ae7-ae076bbd7e9b_-1_ishyperhome0_0_11_22_-1", # 2 pages
+        "https://www.sendo.vn/tu-lanh-lg-inverter-door-in-door-601-lit-gr-x247js-24825976.html?source_block_id=feed&source_page_id=search&source_info=desktop2_60_1655489127639_undefined_-1_cateLvl2_0_2_23_-1" # no review
     ]
+    product_name = "tủ lạnh lg"
     chrome_options = Options()
     # chrome_options.add_argument("--headless")
 
     # start a webdriver
     start = time.time()
     driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
-    result = scrape_sendo(driver, url[2], max_review_num=5, verbose=True)
+    result = scrape_sendo(driver, product_name, max_review_num=5, verbose=True)
     driver.quit()
     print("Time taken: ", time.time() - start)
     pretty = json.dumps(result, indent=4, ensure_ascii=False)
