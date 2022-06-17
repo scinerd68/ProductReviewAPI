@@ -15,7 +15,7 @@ STAR_RATING_CONVERT = {
     "d7e-4e4dcb d7e-9ac674" : 2,
     "d7e-4e4dcb d7e-fede87" : 1
     }
-CHROME_DRIVER_PATH = "/home/viet/OneDrive/Studying Materials/Introduction to Data Science/EDA Project/chromedriver_linux64/chromedriver"
+CHROME_DRIVER_PATH = "/home/viet/OneDrive/Studying_Materials/Introduction_to_Data_Science/EDA Project/chromedriver_linux64/chromedriver"
 REVIEW_COUNTER = 0
 
 
