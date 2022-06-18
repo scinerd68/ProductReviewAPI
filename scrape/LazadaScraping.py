@@ -7,7 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import json
 
 
-def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.2):
+def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
 
     driver.get(url)
     result = {'product_name':'','avg_rating':0,'source':'lazada','reviews':[]}
@@ -18,9 +18,9 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.2):
     ac = ActionChains(driver)
     ac.move_by_offset(1, 1).click().perform()
 
-    #scrape from at most 'max_comment_page' number of review pages
+
     x = 0
-    while x < max_comment_page:
+    while x < max_comment:
         time.sleep(sleep_time_unit)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
         time.sleep(sleep_time_unit*2)
@@ -32,30 +32,37 @@ def scrape_lazada(driver, url, max_comment_page = 4, sleep_time_unit = 0.2):
 
         # Get product review
         for product in product_reviews:
-            review = {}
-            details = product.find_element(By.CSS_SELECTOR, "[class='middle']")
-            details= details.find_elements(By.TAG_NAME,'span')
-            review['id']=review_count
-            review_count +=1
-            review['name'] = details[0].text[3:]
-            review['status'] = details[1].text
-            review['date'] = product.find_element(By.CSS_SELECTOR, "[class='title right']").text
-            review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[src='//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png']"))
-            review['review'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
-            if review != "" or review.strip():
-                # print(review, "\n")
-                result['reviews'].append(review)
+            if x < max_comment:
+                review = {}
+                details = product.find_element(By.CSS_SELECTOR, "[class='middle']")
+                details= details.find_elements(By.TAG_NAME,'span')
+                review['id']=review_count
+                review_count +=1
+                review['name'] = details[0].text[3:]
+                review['status'] = details[1].text
+                review['date'] = product.find_element(By.CSS_SELECTOR, "[class='title right']").text
+                review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[src='//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png']"))
+                review['review'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
+                if review != "" or review.strip():
+                    # print(review, "\n")
+                    result['reviews'].append(review)
+                    x += 1
+            else:
+                break
 
-        #Check for next button to click. If no button found, exit loop.
-        if len(driver.find_elements(By.CSS_SELECTOR,"button.next-pagination-item.next[disabled]")) > 0:
-            break
+        if x < max_comment:
+            #Check for next button to click. If no button found, exit loop.
+            if len(driver.find_elements(By.CSS_SELECTOR,"button.next-pagination-item.next[disabled]")) > 0:
+                break
+            else:
+                button_next = WebDriverWait(driver, 5).until(
+                    EC.visibility_of_element_located((By.CSS_SELECTOR, "button.next-pagination-item.next")))
+                driver.execute_script("arguments[0].click();", button_next)
+                time.sleep(sleep_time_unit*2)
         else:
-            button_next = WebDriverWait(driver, 5).until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, "button.next-pagination-item.next")))
-            driver.execute_script("arguments[0].click();", button_next)
-            time.sleep(sleep_time_unit*2)
+            break
 
-        x += 1
+
 
     return result
 
