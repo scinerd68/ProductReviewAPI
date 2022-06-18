@@ -6,6 +6,7 @@ body {
     flex-direction: column;
 }
 
+/* Navigation bar */
 navbar {
     background-color: #f9faf8;
     color: #1f2937;
@@ -35,11 +36,16 @@ ul {
     color: #e5e7eb;
 }
 
-li>a {
+a {
     color: #1f2937;
     text-decoration: none;
 }
 
+a:hover {
+    color: #1f2937;
+}
+
+/* Homepage */
 .homepage {
     display: flex;
     flex-direction: column;
