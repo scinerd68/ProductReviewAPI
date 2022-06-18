@@ -38,7 +38,7 @@ class GetReview(Resource):
         driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
 
         if site == 'sendo':
-            result = scrape_sendo(driver=driver, input=url, max_review_num=5, verbose=True)
+            result = scrape_sendo(driver=driver, url=url, max_review_num=5, verbose=True)
         elif site == 'lazada':
             result = scrape_lazada(driver, url, 4)
         elif site == 'tiki':
