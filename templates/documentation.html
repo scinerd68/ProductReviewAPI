@@ -10,10 +10,10 @@
 </head>
 <body>
   <navbar>
-    <div class="logo"><a href="#">Product Review API</a></div>
+    <div class="logo"><a href="/">Product Review API</a></div>
     <div class="links">
       <ul>
-        <li><a href="#">Documentation</a></li>
+        <li><a href="/doc">Documentation</a></li>
         <li><a href="#">API Key</a></li>
       </ul>
     </div>
@@ -71,7 +71,7 @@
     <div class="code">
       <div>import requests</div>
       <div>url = "https://www.sendo.vn/op-lung-iphone-6-plus-6s-plus-chong-soc-360-17878754.html"</div>
-      <div>result = requests.get("http://localhost:5000/review", params={"apikey": "your key", "url": url, "site": "sendo"})</div>
+      <div>result = requests.get("http://reviewapi.com/review/byurl", params={"apikey": "your key", "url": url, "site": "sendo"})</div>
       <div>print(result.json())</div>
     </div>
     <hr>
@@ -120,7 +120,7 @@
     <h2>Example:</h2>
     <div class="code">
       <div>import requests</div>
-      <div>result = requests.get("http://localhost:5000/review", params={"apikey": "your key", "name": "television", "site": "all"})</div>
+      <div>result = requests.get("http://reviewapi.com/review/byname", params={"apikey": "your key", "name": "television", "site": "all"})</div>
       <div>print(result.json())</div>
     </div>
   </div>
