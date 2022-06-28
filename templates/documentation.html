@@ -19,13 +19,25 @@
     </div>
   </navbar>
   <div class="doc">
+    <!-- End point !-->
     <h1>API Endpoint</h1>
     <hr>
     <div style="font-size:16px;">Send HTTP requests to:</div>
     <div class="url">http://www.reviewapi.com/</div>
+
+    <!-- Api key -->
+    <h1>API key</h1>
+    <hr>
+    <div>Send GET request to:</div>
+    <div class="url">http://www.reviewapi.com/new_api_key?device_name=[your_device]</div>
+    <div>to obtain API key</div>
+
+    <!-- Parameter -->
     <h1>Parameters</h1>
     <hr>
     <h2>By URL</h2>
+    <div>Send GET request to:</div>
+    <div class="url">http://www.reviewapi.com/byurl</div>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -75,7 +87,10 @@
       <div>print(result.json())</div>
     </div>
     <hr>
+
     <h2>By product name</h2>
+    <div>Send GET request to:</div>
+    <div class="url">http://www.reviewapi.com/byname</div>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
