@@ -7,24 +7,24 @@ from selenium.webdriver.common.action_chains import ActionChains
 import json
 import bs4, requests
 
-def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
+def scrape_lazada(driver, url, max_comment = 5):
 
     driver.get(url)
     result = {'product_name':'','avg_rating':0,'source':'lazada','reviews':[]}
     review_count = 0
 
     #click out pop up
-    time.sleep(sleep_time_unit*2)
+    driver.implicitly_wait(10)
     ac = ActionChains(driver)
     ac.move_by_offset(1, 1).click().perform()
 
 
     x = 0
     while x < max_comment:
-        time.sleep(sleep_time_unit)
+        driver.implicitly_wait(10)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
-        time.sleep(sleep_time_unit*2)
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        driver.implicitly_wait(10)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight*0.8);")
 
         product_reviews = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,"[class='item']")))
         result['product_name'] = driver.find_element(By.CSS_SELECTOR, "[class='pdp-mod-product-badge-title']").text
@@ -59,7 +59,7 @@ def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
                     button_next = WebDriverWait(driver, 5).until(
                         EC.visibility_of_element_located((By.CSS_SELECTOR, "button.next-pagination-item.next")))
                     driver.execute_script("arguments[0].click();", button_next)
-                    time.sleep(sleep_time_unit*2)
+                    driver.implicitly_wait(10)
                 except: break
         else:
             break
@@ -69,7 +69,7 @@ def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
     return result
 
 
-def scrape_lazada_by_product(driver, product_name, max_page = 5, max_comment_per_page = 5, sleep_time_unit = 0.2):
+def scrape_lazada_by_product(driver, product_name, max_page = 5, max_comment_per_page = 5):
     result = {'query': product_name, "result":[]}
     query_url = 'https://google.com/search?q='
     query_url+= '+'.join(product_name.split()+['lazada'])
