@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 import json
-
+import bs4, requests
 
 def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
 
@@ -55,10 +55,12 @@ def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
             if len(driver.find_elements(By.CSS_SELECTOR,"button.next-pagination-item.next[disabled]")) > 0:
                 break
             else:
-                button_next = WebDriverWait(driver, 5).until(
-                    EC.visibility_of_element_located((By.CSS_SELECTOR, "button.next-pagination-item.next")))
-                driver.execute_script("arguments[0].click();", button_next)
-                time.sleep(sleep_time_unit*2)
+                try:
+                    button_next = WebDriverWait(driver, 5).until(
+                        EC.visibility_of_element_located((By.CSS_SELECTOR, "button.next-pagination-item.next")))
+                    driver.execute_script("arguments[0].click();", button_next)
+                    time.sleep(sleep_time_unit*2)
+                except: break
         else:
             break
 
@@ -67,24 +69,30 @@ def scrape_lazada(driver, url, max_comment = 5, sleep_time_unit = 0.2):
     return result
 
 
-def scrape_lazada_by_product(driver, product_name, limiter = 10, sleep_time_unit = 0.2):
+def scrape_lazada_by_product(driver, product_name, max_page = 5, max_comment_per_page = 5, sleep_time_unit = 0.2):
     result = {'query': product_name, "result":[]}
-    query_url = "https://www.lazada.vn/catalog/?q="
-    query_url+= '+'.join(product_name.split())
-    driver.get(query_url)
-    time.sleep(sleep_time_unit)
+    query_url = 'https://google.com/search?q='
+    query_url+= '+'.join(product_name.split()+['lazada'])
 
-    elems = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "[age='0']")))
-    prod_links = [elem.get_attribute('href') for elem in elems]
+    request_result=requests.get( query_url )
 
-    limit = min(limiter, len(prod_links))
+    soup = bs4.BeautifulSoup(request_result.text, "html.parser")
+    prod_links = []
+    for a in soup.find_all('a', href=True):
+        if '/url?q=https://www.lazada.vn/products/' in a['href']:
+            prod_links.append(a['href'][7:])
+    print(len(prod_links))
+    limit = min(max_page, len(prod_links))
     for i in range(limit):
-        result["result"].append(scrape_lazada(driver, prod_links[i]))
+        result["result"].append(scrape_lazada(driver, prod_links[i], max_comment_per_page))
     return result
 
 if __name__ == '__main__':
-
-    driver = webdriver.Chrome()
+    try:
+        driver = webdriver.Chrome()
+    except:
+        from webdriver_manager.chrome import ChromeDriverManager
+        driver = webdriver.Chrome(ChromeDriverManager().install())
     #driver = webdriver.Edge()
     # url = r'https://www.lazada.vn/products/dien-thoai-apple-iphone-13-pro-max-128gb-i1522497182-s6393590575.html?search=1&spm=a2o4n.searchlistcategory.list.i72.75bf3a1fbXB2jM'
     # test = scrape_lazada(driver, url, 4)
