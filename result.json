@@ -1,0 +1,85 @@
+[
+    {
+        "product_name": "T\u1ee7 l\u1ea1nh LG Inverter 187 l\u00edt GN-L205SV - GN-L205SV",
+        "average_rating": "/5",
+        "source": "sendo",
+        "reviews": [
+            {
+                "id": 0,
+                "name": "L\u00ea Th\u1ecb M\u1ef9 Duy\u00ean",
+                "date": "21:19 | 26/04/2021",
+                "content": "",
+                "rating": 5
+            },
+            {
+                "id": 1,
+                "name": "NGUYEN THI MY PHUONG",
+                "date": "19:23 | 17/10/2020",
+                "content": "Chuy\u00ean nghi\u1ec7p, th\u00e2n thi\u1ec7n. ",
+                "rating": 5
+            },
+            {
+                "id": 2,
+                "name": "nguyen thanh luc",
+                "date": "20:56 | 07/10/2020",
+                "content": "Chuy\u00ean nghi\u1ec7p, th\u00e2n thi\u1ec7n. ",
+                "rating": 5
+            },
+            {
+                "id": 3,
+                "name": "PH\u1ea0M TH\u1eca PH\u01af\u01a0NG TH\u1ea2O",
+                "date": "12:36 | 14/09/2020",
+                "content": "Chuy\u00ean nghi\u1ec7p, th\u00e2n thi\u1ec7n. \u0110\u1eb9p nh\u01b0 m\u00f4 t\u1ea3. Ch\u1ea5t l\u01b0\u1ee3ng tuy\u1ec7t v\u1eddi. Gi\u00e1 t\u1ed1t. Giao h\u00e0ng nhanh b\u1ea5t ng\u1edd. ",
+                "rating": 5
+            }
+        ]
+    },
+    {
+        "product_name": "T\u1ee7 l\u1ea1nh LG Inverter Door-in-Door 601 l\u00edt GR-X247JS - GR-X247JS",
+        "average_rating": null,
+        "source": "sendo",
+        "reviews": []
+    },
+    {
+        "product_name": "T\u1ee7 l\u1ea1nh LG Inverter 255 l\u00edt GN-L255PN - GN-L255PN",
+        "average_rating": "5.0/5",
+        "source": "sendo",
+        "reviews": [
+            {
+                "id": 4,
+                "name": "L\u00ea ho\u00e0ng \u0111\u1ea1o",
+                "date": "16:59 | 20/03/2021",
+                "content": "\u0110\u1eb9p nh\u01b0 m\u00f4 t\u1ea3. ",
+                "rating": 5
+            },
+            {
+                "id": 5,
+                "name": "hai tran",
+                "date": "16:29 | 19/10/2020",
+                "content": "Ch\u1ea5t l\u01b0\u1ee3ng tuy\u1ec7t v\u1eddi. ",
+                "rating": 5
+            },
+            {
+                "id": 6,
+                "name": "v\u00e2n nguy\u1ec5n ho\u00e0ng l\u1ec7",
+                "date": "16:25 | 19/10/2020",
+                "content": "Chuy\u00ean nghi\u1ec7p, th\u00e2n thi\u1ec7n. Giao h\u00e0ng nhanh b\u1ea5t ng\u1edd. ",
+                "rating": 5
+            },
+            {
+                "id": 7,
+                "name": " PHAM THUY",
+                "date": "18:24 | 08/10/2020",
+                "content": "Chuy\u00ean nghi\u1ec7p, th\u00e2n thi\u1ec7n. ",
+                "rating": 5
+            },
+            {
+                "id": 8,
+                "name": "TR\u1ea6N TU\u1ea4N V\u0168",
+                "date": "13:46 | 07/10/2020",
+                "content": "Chuy\u00ean nghi\u1ec7p, th\u00e2n thi\u1ec7n. ",
+                "rating": 5
+            }
+        ]
+    }
+]
