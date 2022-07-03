@@ -23,6 +23,8 @@ def scrape_lazada(driver, url, max_comment = 5):
     while x < max_comment:
         driver.implicitly_wait(10)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
+        driver.implicitly_wait(5)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight*0.7);")
         driver.implicitly_wait(10)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight*0.8);")
 
@@ -71,8 +73,8 @@ def scrape_lazada(driver, url, max_comment = 5):
 
 def scrape_lazada_by_product(driver, product_name, max_page = 5, max_comment_per_page = 5):
     result = {'query': product_name, "result":[]}
-    query_url = 'https://google.com/search?q='
-    query_url+= '+'.join(product_name.split()+['lazada'])
+    query_url = 'https://www.google.com/search?q=site%3Alazada.vn%2Fproducts+'
+    query_url+= '+'.join(product_name.split())
 
     request_result=requests.get( query_url )
 
