@@ -1,85 +1,82 @@
 [
     {
-        "product_name": "Tủ lạnh LG Inverter 187 lít GN-L205SV - GN-L205SV",
-        "average_rating": "5.0/5",
-        "source": "sendo",
+        "product_name": "Tủ Lạnh Inverter LG GN-D422BL (393L) – Hàng Chính Hãng",
+        "source": "tiki",
+        "avg_rating": 5.0,
         "reviews": [
             {
                 "id": 0,
-                "name": "Lê Thị Mỹ Duyên",
-                "date": "21:19 | 26/04/2021",
-                "content": "",
-                "rating": 5
+                "review": "Cao to đen mạnh mẽ",
+                "buy_status": true,
+                "buyer_name": "Nguyễn Lam"
             },
             {
                 "id": 1,
-                "name": "NGUYEN THI MY PHUONG",
-                "date": "19:23 | 17/10/2020",
-                "content": "Chuyên nghiệp, thân thiện. ",
-                "rating": 5
+                "review": "Máy lạnh to thật. Để đồ sướng",
+                "buy_status": true,
+                "buyer_name": "Duy Khương"
             },
             {
                 "id": 2,
-                "name": "nguyen thanh luc",
-                "date": "20:56 | 07/10/2020",
-                "content": "Chuyên nghiệp, thân thiện. ",
-                "rating": 5
+                "review": "Tủ lạnh to, xài tốt, nhân viên giao hàng nhiệt tình, giao hàng đúng hẹn",
+                "buy_status": true,
+                "buyer_name": "Thuy Duong"
             },
             {
                 "id": 3,
-                "name": "PHẠM THỊ PHƯƠNG THẢO",
-                "date": "12:36 | 14/09/2020",
-                "content": "Chuyên nghiệp, thân thiện. Đẹp như mô tả. Chất lượng tuyệt vời. Giá tốt. Giao hàng nhanh bất ngờ. ",
-                "rating": 5
-            }
-        ]
-    },
-    {
-        "product_name": "Tủ lạnh LG Inverter 255 lít GN-L255PN - GN-L255PN",
-        "average_rating": "5.0/5",
-        "source": "sendo",
-        "reviews": [
+                "review": "Nhân viên giao hàng tận tình. Tủ lạnh chạy rất êm.",
+                "buy_status": true,
+                "buyer_name": "Nguyễn Hoàng Kim"
+            },
             {
                 "id": 4,
-                "name": "Lê hoàng đạo",
-                "date": "16:59 | 20/03/2021",
-                "content": "Đẹp như mô tả. ",
-                "rating": 5
-            },
-            {
-                "id": 5,
-                "name": "hai tran",
-                "date": "16:29 | 19/10/2020",
-                "content": "Chất lượng tuyệt vời. ",
-                "rating": 5
-            },
-            {
-                "id": 6,
-                "name": "vân nguyễn hoàng lệ",
-                "date": "16:25 | 19/10/2020",
-                "content": "Chuyên nghiệp, thân thiện. Giao hàng nhanh bất ngờ. ",
-                "rating": 5
-            },
-            {
-                "id": 7,
-                "name": " PHAM THUY",
-                "date": "18:24 | 08/10/2020",
-                "content": "Chuyên nghiệp, thân thiện. ",
-                "rating": 5
-            },
-            {
-                "id": 8,
-                "name": "TRẦN TUẤN VŨ",
-                "date": "13:46 | 07/10/2020",
-                "content": "Chuyên nghiệp, thân thiện. ",
-                "rating": 5
+                "review": "Okkkkkkkkkkkkkk ❤️🥰😘👏👍😁😍😍😍",
+                "buy_status": true,
+                "buyer_name": "Thanh Mai"
             }
         ]
     },
     {
-        "product_name": "Tủ lạnh LG Inverter Door-in-Door 601 lít GR-X247JS - GR-X247JS",
-        "average_rating": null,
-        "source": "sendo",
+        "product_name": "Tủ Lạnh Inverter LG GN-D255BL (255L) – Hàng Chính Hãng",
+        "source": "tiki",
+        "avg_rating": 5.0,
         "reviews": []
+    },
+    {
+        "product_name": "Tủ Lạnh Inverter LG GN-D255PS (255L) – Hàng Chính Hãng",
+        "source": "tiki",
+        "avg_rating": 4.9,
+        "reviews": [
+            {
+                "id": 0,
+                "review": "Tủ lạnh đẹp, LG tự kích hoạt bảo hành. Thấy ok",
+                "buy_status": true,
+                "buyer_name": "Zalo Ngô Khắc Vũ"
+            },
+            {
+                "id": 1,
+                "review": "Giao hàng nhanh, tủ đẹp vừa khớp với góc bếp trong nhà",
+                "buy_status": true,
+                "buyer_name": "Nguyễn Duy Khánh"
+            },
+            {
+                "id": 2,
+                "review": "nhân viên giao hàng sớm hơn dự kiến vui vẻ nhiệt tình, hàng dùng được vài ngày cảm thấy ổn",
+                "buy_status": true,
+                "buyer_name": "Đỗ Võ Hồng Tươi"
+            },
+            {
+                "id": 3,
+                "review": "Ok",
+                "buy_status": true,
+                "buyer_name": "Phan Tâm"
+            },
+            {
+                "id": 4,
+                "review": "Hài lòng với tủ lạnh LG GN-D255PS\nNhân viên giao hàng rất cẩn thận, đã cho tủ hoạt động, máy chạy rất êm, tks",
+                "buy_status": true,
+                "buyer_name": "Duy Bui"
+            }
+        ]
     }
 ]
