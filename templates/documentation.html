@@ -124,18 +124,25 @@
           <td>The platform that the product is from</td>
         </tr>
         <tr>
+          <td scope="row">productnum</td>
+          <td>No</td>
+          <td></td>
+          <td>3</td>
+          <td>Maximum number products to be scraped, max = 10</td>
+        </tr>
+        <tr>
           <td scope="row">maxreview</td>
           <td>No</td>
           <td></td>
           <td>5</td>
-          <td>Maximum number of reviews of the product, max = 20</td>
+          <td>Maximum number of reviews of each product, max = 10</td>
         </tr>
       </tbody>
     </table>
     <h2>Example:</h2>
     <div class="code">
       <div>import requests</div>
-      <div>result = requests.get("http://reviewapi.com/review/byname", params={"apikey": "your key", "name": "television", "site": "all"})</div>
+      <div>result = requests.get("http://reviewapi.com/review/byname", params={"apikey": "your key", "name": "tủ lạnh lg", "site": "sendo"})</div>
       <div>print(result.json())</div>
     </div>
   </div>

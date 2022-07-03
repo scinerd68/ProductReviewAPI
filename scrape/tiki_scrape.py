@@ -9,9 +9,9 @@ from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta
 import codecs
 import logging
-from sendo_scrape import CHROME_DRIVER_PATH
+# from sendo_scrape import CHROME_DRIVER_PATH
 
-# CHROME_DRIVER_PATH = "D:/chromedriver.exe"
+CHROME_DRIVER_PATH = "D:/chromedriver.exe"
 
 
 def scrape_tiki_by_url(driver, url, max_review_num=10, review_wait_time=10):
