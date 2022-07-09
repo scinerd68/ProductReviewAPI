@@ -74,10 +74,9 @@ def scrape_lazada(driver, url, max_comment = 5):
 
 def scrape_lazada_by_product(driver, product_name, max_page = 5, max_comment_per_page = 5):
     result = {'query': product_name, "result":[]}
-    query_url = 'https://www.google.com/search?q=site%3Alazada.vn%2Fproducts+'
-    query_url+= '+'.join(product_name.split())
+    query_url = 'https://www.google.com/search'
 
-    request_result=requests.get( query_url )
+    request_result= requests.get(query_url, params={'q': f'site:lazada.vn/products {product_name}'})
 
     soup = bs4.BeautifulSoup(request_result.text, "html.parser")
     prod_links = []
