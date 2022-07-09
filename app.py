@@ -16,6 +16,7 @@ app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_ECHO'] = True
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 
@@ -39,10 +40,12 @@ class GetReviewByProductName(Resource):
 
         if site not in ['sendo', 'lazada', 'tiki', 'all']:
             return f"Argument value '{site}' is not supported", 400
-        
+
 
         chrome_options = Options()
         chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+
         driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
 
         if site == 'sendo':
@@ -71,6 +74,9 @@ class GetReviewByURL(Resource):
 
         chrome_options = Options()
         chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+
+
         driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
 
         if site == 'sendo':
