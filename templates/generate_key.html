@@ -7,6 +7,16 @@
   <title>Product Review API</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="../static/style3.css">
+  <script async>
+  function validateForm() {
+    let device = document.forms["api_form"]["device_name"].value;
+    device = device.trim();
+    if (device == "") {
+      alert("Device name must be filled out");
+      return false;
+    }
+  }
+  </script>
 </head>
 <body>
   <navbar>
@@ -14,17 +24,22 @@
     <div class="links">
       <ul>
         <li><a href="/doc">Documentation</a></li>
-        <li><a href="#">API Key</a></li>
+        <li><a href="/api_key">API Key</a></li>
       </ul>
     </div>
   </navbar>
   <div class="doc">
     <h1>API Key</h1>
     <hr>
-    <h2>Generate API key</h2>
-    <form>
+    <h2>Generate new API key</h2>
+    <form name="api_form" action="/api_key" onsubmit="return validateForm()" method="post">
       <span>Device Name</span>
-      <input>
+      <input type="text" name="device_name">
       <input type="submit" value="Submit">
     </form>
+    {% if key != None %}
+    <div class="key">
+      {{ key }}
+    </div>
+    {% endif %}
   </div>
