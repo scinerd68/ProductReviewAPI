@@ -1,4 +1,3 @@
-from itertools import product
 from flask import Flask, render_template, request
 from flask_restful import Resource, Api
 from scrape.LazadaScraping import scrape_lazada, scrape_lazada_by_product
@@ -9,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from db import db
 from models.device import DeviceModel
 from security import api_required
+
 
 CHROME_DRIVER_PATH = "D:/chromedriver.exe"
 
@@ -28,6 +28,22 @@ def home():
 @app.route("/doc")
 def documentation():
     return render_template('documentation.html')
+
+
+@app.route("/api_key",  methods = ['GET', 'POST'])
+def api_key():
+    if request.method == 'POST':
+        device_name = request.form.get('device_name')
+        if DeviceModel.find_by_name(device_name=device_name):
+            return {'message': f"A device with name {device_name} already exists."}, 400
+
+        new_device = DeviceModel(
+            device_name=device_name,
+        )
+        new_device.save_to_db()
+        api_key = new_device.device_key
+        return render_template('generate_key.html', key=api_key)
+    return render_template('generate_key.html', key=None)
 
 
 class GetReviewByProductName(Resource):
@@ -103,6 +119,7 @@ class AddDevice(Resource):
         new_device.save_to_db()
 
         return  {"api_key": new_device.device_key}, 201
+
 
 api.add_resource(AddDevice, '/new_api_key')
 api.add_resource(GetReviewByURL, '/review/byurl')
