@@ -51,8 +51,8 @@ class GetReviewByProductName(Resource):
     def get(self):
         product_name = request.args.get('name')
         site = request.args.get('site')
-        max_review = request.args.get('maxreview', 5) # 5 is default max_review
-        product_num = request.args.get('productnum', 3) # 3 is default product num
+        max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
+        product_num = int(request.args.get('productnum', 3)) # 3 is default product num
 
         if site not in ['sendo', 'lazada', 'tiki', 'all']:
             return f"Argument value '{site}' is not supported", 400
@@ -73,6 +73,13 @@ class GetReviewByProductName(Resource):
         elif site == 'tiki':
             result = scrape_tiki_by_name(driver=driver, input=product_name, product_num=product_num,
                                          max_review_num=max_review)
+        else:
+            result = scrape_sendo(driver=driver, input=product_name, max_review_num=max_review,
+                                  product_num=product_num, verbose=True)
+            result.extend(scrape_lazada_by_product(driver=driver, product_name=product_name, max_page=product_num,
+                                              max_comment_per_page=max_review))
+            result.extend(scrape_tiki_by_name(driver=driver, input=product_name, product_num=product_num,
+                                         max_review_num=max_review))
 
         driver.quit()
         return result
@@ -83,7 +90,7 @@ class GetReviewByURL(Resource):
     def get(self):
         url = request.args.get('url')
         site = request.args.get('site')
-        max_review = request.args.get('maxreview', 5) # 5 is default max_review
+        max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
 
         if site not in ['sendo', 'lazada', 'tiki']:
             return f"Argument value '{site}' is not supported", 400
@@ -100,7 +107,7 @@ class GetReviewByURL(Resource):
         elif site == 'lazada':
             result = scrape_lazada(driver=driver, url=url, max_comment=max_review)
         elif site == 'tiki':
-            result = scrape_tiki_by_url(driver=driver, url=url, max_review_num=max_review)
+            result = scrape_tiki_by_url(driver=driver, url=url, max_review_num=max_review)        
 
         driver.quit()
         return result
