@@ -10,7 +10,7 @@ from models.device import DeviceModel
 from security import api_required
 import hashlib
 import json
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import os
 
 CHROME_DRIVER_PATH = "D:/chromedriver.exe"
@@ -48,11 +48,13 @@ def api_key():
         return render_template('generate_key.html', key=api_key)
     return render_template('generate_key.html', key=None)
 
-def get_cache_path(type, query, site):
+
+def get_cache_path(type, product_name, site):
     cache_file_name = str(type)+"__"+str(product_name)+"__"+str(site)
     cache_file_name = str(int(hashlib.sha1(cache_file_name.encode("utf-8")).hexdigest(), 16) % (10 ** 32))+".json"
     cache_path = os.path.join(os.getcwd(), 'cache', cache_file_name)
     return cache_path
+
 
 class GetReviewByProductName(Resource):
     @api_required
@@ -120,13 +122,13 @@ class GetReviewByProductName(Resource):
 
             driver.quit()
 
-            cache = {"date": datetime.strftime(date.today(), '%y %m %d'), "result" : result, 'maxreview': maxreview, 'productnum': productnum }
+            cache = {"date": datetime.strftime(date.today(), '%y %m %d'), "result" : result, 'maxreview': max_review, 'productnum': product_num }
             with open(cache_path, 'w', encoding='utf8') as json_file:
                 json.dump(cache, json_file, ensure_ascii=False)
 
             if site == 'all':
                 for site in ['sendo', 'lazada', 'tiki']:
-                     cache = {"date": datetime.strftime(date.today(), '%y %m %d'), "result" : results[site], 'maxreview': maxreview, 'productnum': productnum }
+                     cache = {"date": datetime.strftime(date.today(), '%y %m %d'), "result" : results[site], 'maxreview': max_review, 'productnum': product_num }
 
                      cache_path = get_cache_path("productname", product_name, site)
 
