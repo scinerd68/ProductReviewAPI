@@ -49,8 +49,8 @@ def api_key():
     return render_template('generate_key.html', key=None)
 
 
-def get_cache_path(type, product_name, site):
-    cache_file_name = str(type)+"__"+str(product_name)+"__"+str(site)
+def get_cache_path(type, query, site):
+    cache_file_name = str(type)+"__"+str(query)+"__"+str(site)
     cache_file_name = str(int(hashlib.sha1(cache_file_name.encode("utf-8")).hexdigest(), 16) % (10 ** 32))+".json"
     cache_path = os.path.join(os.getcwd(), 'cache', cache_file_name)
     return cache_path
