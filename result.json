@@ -1,40 +1,294 @@
-{
-    "query": "tủ lạnh LG",
-    "result": [
-        {
-            "product_name": "[Trả góp 0%]Tủ lạnh LG Inverter 255 lít GN-D255BL",
-            "avg_rating": "5.0",
-            "source": "lazada",
-            "reviews": [
-                {
-                    "id": 0,
-                    "name": " Lê T.",
-                    "status": "Chứng nhận đã mua hàng",
-                    "date": "17 thg 12 2021",
-                    "rating": 5,
-                    "review": ""
-                },
-                {
-                    "id": 1,
-                    "name": " huu N.",
-                    "status": "Chứng nhận đã mua hàng",
-                    "date": "02 thg 4 2021",
-                    "rating": 5,
-                    "review": ""
-                }
-            ]
-        },
-        {
-            "product_name": "Tủ lạnh LG Inverter 601 lít GR-D247MC - Làm đá tự động Lấy nước bên ngoài Bộ lọc 5 lớp Hygiene Fresh+™",
-            "avg_rating": 0,
-            "source": "lazada",
-            "reviews": []
-        },
-        {
-            "product_name": "[Trả góp 0%]Tủ lạnh LG Inverter 255 lít GN-M255BL -HÀNG CHÍNH HÃNG",
-            "avg_rating": 0,
-            "source": "lazada",
-            "reviews": []
-        }
-    ]
-}
+[
+    {
+        "product_name": "Tủ lạnh LG Inverter 187 lít GN-L205SV - GN-L205SV",
+        "average_rating": "5.0/5",
+        "source": "sendo",
+        "reviews": [
+            {
+                "id": 0,
+                "name": "Lê Thị Mỹ Duyên",
+                "date": "21:19 | 26/04/2021",
+                "content": "",
+                "rating": 5
+            },
+            {
+                "id": 1,
+                "name": "NGUYEN THI MY PHUONG",
+                "date": "19:23 | 17/10/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            },
+            {
+                "id": 2,
+                "name": "nguyen thanh luc",
+                "date": "20:56 | 07/10/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            },
+            {
+                "id": 3,
+                "name": "PHẠM THỊ PHƯƠNG THẢO",
+                "date": "12:36 | 14/09/2020",
+                "content": "Chuyên nghiệp, thân thiện. Đẹp như mô tả. Chất lượng tuyệt vời. Giá tốt. Giao hàng nhanh bất ngờ. ",
+                "rating": 5
+            }
+        ]
+    },
+    {
+        "product_name": "Tủ lạnh LG Inverter 255 lít GN-L255PN - GN-L255PN",
+        "average_rating": "5.0/5",
+        "source": "sendo",
+        "reviews": [
+            {
+                "id": 4,
+                "name": "Lê hoàng đạo",
+                "date": "16:59 | 20/03/2021",
+                "content": "Đẹp như mô tả. ",
+                "rating": 5
+            },
+            {
+                "id": 5,
+                "name": "hai tran",
+                "date": "16:29 | 19/10/2020",
+                "content": "Chất lượng tuyệt vời. ",
+                "rating": 5
+            },
+            {
+                "id": 6,
+                "name": "vân nguyễn hoàng lệ",
+                "date": "16:25 | 19/10/2020",
+                "content": "Chuyên nghiệp, thân thiện. Giao hàng nhanh bất ngờ. ",
+                "rating": 5
+            },
+            {
+                "id": 7,
+                "name": " PHAM THUY",
+                "date": "18:24 | 08/10/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            },
+            {
+                "id": 8,
+                "name": "TRẦN TUẤN VŨ",
+                "date": "13:46 | 07/10/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            }
+        ]
+    },
+    {
+        "product_name": "Tủ lạnh LG Inverter Door-in-Door 601 lít GR-X247JS - GR-X247JS",
+        "average_rating": null,
+        "source": "sendo",
+        "reviews": []
+    },
+    {
+        "product_name": "Tủ lạnh LG Inverter 393 lít GN-L422GBK - GN-L422GBK",
+        "average_rating": "5.0/5",
+        "source": "sendo",
+        "reviews": [
+            {
+                "id": 9,
+                "name": "NGUYEN QUYNH NHU",
+                "date": "15:15 | 21/03/2021",
+                "content": "",
+                "rating": 5
+            },
+            {
+                "id": 10,
+                "name": "kimlily",
+                "date": "09:01 | 21/03/2021",
+                "content": "Giao hàng nhanh bất ngờ. ",
+                "rating": 5
+            },
+            {
+                "id": 11,
+                "name": "loan Nguyễn thị kiều",
+                "date": "16:11 | 20/10/2020",
+                "content": "Giao hàng nhanh bất ngờ. ",
+                "rating": 5
+            },
+            {
+                "id": 12,
+                "name": "VŨ THỊ THÙY VÂN",
+                "date": "19:17 | 29/09/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            }
+        ]
+    },
+    {
+        "product_name": "Tủ lạnh LG Inverter 393 lít GN-D422BL - GN-D422BL",
+        "average_rating": "5.0/5",
+        "source": "sendo",
+        "reviews": [
+            {
+                "id": 13,
+                "name": "Mịn Hà",
+                "date": "10:13 | 18/03/2021",
+                "content": "Chuyên nghiệp, thân thiện. Đẹp như mô tả. Đóng gói kỹ lưỡng. Chất lượng tuyệt vời. Giá tốt. Giao hàng nhanh bất ngờ. ",
+                "rating": 5
+            },
+            {
+                "id": 14,
+                "name": "Lê thị mỹ Chi",
+                "date": "18:32 | 08/10/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            },
+            {
+                "id": 15,
+                "name": "Võ Tâm",
+                "date": "21:27 | 30/09/2020",
+                "content": "Chuyên nghiệp, thân thiện. ",
+                "rating": 5
+            },
+            {
+                "id": 16,
+                "name": "Nguyễn Công Thành",
+                "date": "18:18 | 11/08/2020",
+                "content": "",
+                "rating": 5
+            }
+        ]
+    },
+    {
+        "product_name": "Tủ Lạnh Inverter LG GN-D422BL (393L) – Hàng Chính Hãng",
+        "source": "tiki",
+        "avg_rating": 5.0,
+        "reviews": [
+            {
+                "id": 0,
+                "review": "Cao to đen mạnh mẽ",
+                "buy_status": true,
+                "buyer_name": "Nguyễn Lam"
+            },
+            {
+                "id": 1,
+                "review": "Máy lạnh to thật. Để đồ sướng",
+                "buy_status": true,
+                "buyer_name": "Duy Khương"
+            },
+            {
+                "id": 2,
+                "review": "Tủ lạnh to, xài tốt, nhân viên giao hàng nhiệt tình, giao hàng đúng hẹn",
+                "buy_status": true,
+                "buyer_name": "Thuy Duong"
+            },
+            {
+                "id": 3,
+                "review": "Nhân viên giao hàng tận tình. Tủ lạnh chạy rất êm.",
+                "buy_status": true,
+                "buyer_name": "Nguyễn Hoàng Kim"
+            },
+            {
+                "id": 4,
+                "review": "Okkkkkkkkkkkkkk ❤️🥰😘👏👍😁😍😍😍",
+                "buy_status": true,
+                "buyer_name": "Thanh Mai"
+            }
+        ]
+    },
+    {
+        "product_name": "Tủ Lạnh Inverter LG GN-D315S (315L) – Hàng Chính Hãng",
+        "source": "tiki",
+        "avg_rating": null,
+        "reviews": []
+    },
+    {
+        "product_name": "Tủ Lạnh Inverter LG GN-M255BL (255L) - Hàng chính hãng",
+        "source": "tiki",
+        "avg_rating": 4.7,
+        "reviews": [
+            {
+                "id": 0,
+                "review": "Giao hàng nhanh ngay trong ngày, chất lượng tốt",
+                "buy_status": true,
+                "buyer_name": "Trần Thị Thùy Trang"
+            },
+            {
+                "id": 1,
+                "review": "giao hàng rất nhanh và hàng chính hãng đúng y như miêu tả.",
+                "buy_status": true,
+                "buyer_name": "Đào quốc bảo"
+            },
+            {
+                "id": 2,
+                "review": "",
+                "buy_status": true,
+                "buyer_name": "Hà Thanh"
+            },
+            {
+                "id": 3,
+                "review": "Sản phẩm tốt",
+                "buy_status": true,
+                "buyer_name": "Nguyen Hoang Anh"
+            },
+            {
+                "id": 4,
+                "review": "",
+                "buy_status": true,
+                "buyer_name": "Thanh Thanh"
+            }
+        ]
+    },
+    {
+        "product_name": "Tủ Lạnh Inverter LG GN-D255PS (255L) – Hàng Chính Hãng",
+        "source": "tiki",
+        "avg_rating": null,
+        "reviews": []
+    },
+    {
+        "product_name": "Tủ lạnh LG Inverter 613 lít  GR-B247WB  - Chỉ giao tại HCM",
+        "source": "tiki",
+        "avg_rating": 3.0,
+        "reviews": []
+    },
+    {
+        "product_name": "[Trả góp 0%]Tủ lạnh LG Inverter 255 lít GN-D255BL",
+        "avg_rating": "5.0",
+        "source": "lazada",
+        "reviews": [
+            {
+                "id": 0,
+                "name": " Lê T.",
+                "status": "Chứng nhận đã mua hàng",
+                "date": "17 thg 12 2021",
+                "rating": 5,
+                "review": ""
+            },
+            {
+                "id": 1,
+                "name": " huu N.",
+                "status": "Chứng nhận đã mua hàng",
+                "date": "02 thg 4 2021",
+                "rating": 5,
+                "review": ""
+            }
+        ]
+    },
+    {
+        "product_name": "Trả Góp 0% - Tủ Lạnh LG Inverter 601 lít GR-D247JDS - Free shipping HCM",
+        "avg_rating": 0,
+        "source": "lazada",
+        "reviews": []
+    },
+    {
+        "product_name": "[Trả góp 0%]Tủ lạnh LG Inverter 255 lít GN-M255BL -HÀNG CHÍNH HÃNG",
+        "avg_rating": 0,
+        "source": "lazada",
+        "reviews": []
+    },
+    {
+        "product_name": "[Trả góp 0%]Tủ lạnh LG Inverter 613 lít GR-B247JDS",
+        "avg_rating": 0,
+        "source": "lazada",
+        "reviews": []
+    },
+    {
+        "product_name": "Tủ lạnh LG Inverter 601 lít GR-D247MC - Làm đá tự động Lấy nước bên ngoài Bộ lọc 5 lớp Hygiene Fresh+™",
+        "avg_rating": 0,
+        "source": "lazada",
+        "reviews": []
+    }
+]
