@@ -67,12 +67,11 @@ def load_cache_path(cache_path, max_review, product_num):
         if (datetime.combine(date.today(), datetime.min.time()) - date_recorded) <= timedelta(days = 15):
             if max_review <= cache['maxreview'] and product_num <= cache['productnum']:
                 cache_exist = True
-                result = cache["result"][:product_num]
+                result = cache['result'][:product_num]
                 for product in result:
                     product['reviews'] = product['reviews'][:max_review]
 
     return cache_exist, result
-
 
 
 class GetReviewByProductName(Resource):
@@ -171,20 +170,20 @@ class GetReviewByURL(Resource):
         site = request.args.get('site')
         if site not in ['sendo', 'lazada', 'tiki']:
             return f"Argument value '{site}' is not supported", 400
+        max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
 
         cache_path = get_cache_path('', url, '')
         cache_exist = False
-
-        max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
-
+        
         if os.path.exists(cache_path):
             cache = json.load(cache_path)
             date_recorded = datetime.strptime(cache['date'], '%y %m %d')
             if (datetime.combine(date.today(), datetime.min.time()) - date_recorded) < timedelta(days = 15):
                 if max_review < cache['maxreview']:
-                    result = cache.copy()
-                    result['reviews'] = cache['reviews'][:min(max_review, len(cache['reviews']))] #in case scrapable reviews num < max_review
+                    result = cache['result']
+                    result['reviews'] = cache['result']['reviews'][:max_review] 
                     cache_exist = True
+                    return result
 
         if not cache_exist:
             chrome_options = Options()
@@ -201,7 +200,9 @@ class GetReviewByURL(Resource):
 
             driver.quit()
 
-            cache = result.copy()
+            cache = {}
+            cache['result'] = result.copy()
+            cache['maxreview'] = max_review
             cache['date'] = datetime.strftime(date.today(), '%y %m %d')
             with open(cache_path, 'w', encoding='utf8') as json_file:
                 json.dump(cache, json_file, ensure_ascii=False)
