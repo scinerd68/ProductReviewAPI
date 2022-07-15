@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_restful import Resource, Api
 from scrape.LazadaScraping import scrape_lazada, scrape_lazada_by_product
-from scrape.sendo_scrape import scrape_sendo, scrape_sendo_by_url
+from scrape.sendo_scrape import scrape_sendo
 from scrape.tiki_scrape import scrape_tiki_by_name, scrape_tiki_by_url
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -11,6 +11,7 @@ from security import api_required
 import hashlib
 import json
 from datetime import date, datetime, timedelta
+from urllib.parse import urlparse
 import os
 
 CHROME_DRIVER_PATH = 'D:/chromedriver.exe'
@@ -74,13 +75,30 @@ def load_cache_path(cache_path, max_review, product_num):
     return cache_exist, result
 
 
+def get_url_alias(url):
+    url_object = urlparse(url)
+    return url_object.netloc + url_object.path
+
+
 class GetReviewByProductName(Resource):
     @api_required
     def get(self):
         product_name = request.args.get('name')
         site = request.args.get('site')
-        max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
-        product_num = int(request.args.get('productnum', 3)) # 3 is default product num
+        if site not in ['sendo', 'lazada', 'tiki', 'all']:
+            return f"Argument value '{site}' is not supported", 400
+        try:
+            max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
+        except ValueError:
+            return "Please provide an integer for 'maxreview' parameter", 400
+        if max_review > 10:
+            return "Request failed, maxreview must <= 10", 400
+        try:
+            product_num = int(request.args.get('productnum', 3)) # 3 is default product num
+        except ValueError:
+            return "Please provide an integer for 'productnum' parameter", 400
+        if product_num > 10:
+            return "Request failed, productnum must <= 10", 400
 
         # Cache path is used for individual site, if site == 'all' check each site separately
         cache_path = get_cache_path('productname', product_name, site)
@@ -170,21 +188,31 @@ class GetReviewByURL(Resource):
         site = request.args.get('site')
         if site not in ['sendo', 'lazada', 'tiki']:
             return f"Argument value '{site}' is not supported", 400
-        max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
-
-        cache_path = get_cache_path('', url, '')
+        try:
+            max_review = int(request.args.get('maxreview', 5)) # 5 is default max_review
+        except ValueError:
+            return "Please provide an integer for 'maxreview' parameter", 400
+        if max_review > 10:
+            return "Request failed, maxreview must <= 10", 400
+        
+        url_alias = get_url_alias(url)
+        cache_path = get_cache_path('', url_alias, '')
         cache_exist = False
         
+        # Load cache if exist
         if os.path.exists(cache_path):
-            cache = json.load(cache_path)
+            with open(cache_path, encoding='utf-8') as f:
+                cache = json.load(f)
+
             date_recorded = datetime.strptime(cache['date'], '%y %m %d')
             if (datetime.combine(date.today(), datetime.min.time()) - date_recorded) < timedelta(days = 15):
-                if max_review < cache['maxreview']:
+                if max_review <= cache['maxreview']:
                     result = cache['result']
                     result['reviews'] = cache['result']['reviews'][:max_review] 
                     cache_exist = True
                     return result
 
+        # Scrape if not exist
         if not cache_exist:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
@@ -192,7 +220,7 @@ class GetReviewByURL(Resource):
             driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
 
             if site == 'sendo':
-                result = scrape_sendo_by_url(driver=driver, url=url, max_review_num=5, verbose=True)
+                result = scrape_sendo(driver=driver, input=url, max_review_num=max_review)
             elif site == 'lazada':
                 result = scrape_lazada(driver=driver, url=url, max_comment=max_review)
             elif site == 'tiki':
