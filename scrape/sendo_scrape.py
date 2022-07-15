@@ -10,11 +10,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 STAR_RATING_CONVERT = {
-    "d7e-4e4dcb d7e-271a22" : 5,
-    "d7e-4e4dcb d7e-cd8bf7" : 4,
-    "d7e-4e4dcb d7e-f924b9" : 3,
-    "d7e-4e4dcb d7e-9ac674" : 2,
-    "d7e-4e4dcb d7e-fede87" : 1
+    "d7e-4e4dcb d7e-271a22" : 5.0,
+    "d7e-4e4dcb d7e-cd8bf7" : 4.0,
+    "d7e-4e4dcb d7e-f924b9" : 3.0,
+    "d7e-4e4dcb d7e-9ac674" : 2.0,
+    "d7e-4e4dcb d7e-fede87" : 1.0
     }
 CHROME_DRIVER_PATH = "/home/viet/OneDrive/Studying_Materials/Introduction_to_Data_Science/EDA Project/chromedriver_linux64/chromedriver"
 REVIEW_COUNTER = 0
@@ -43,10 +43,6 @@ def scrape_from_review_list(review_list, result, max_review_num):
         name = cur_review.contents[1].strong.text
         logging.info(f"Got customer's name: {name}")
 
-        # review date
-        date = cur_review.contents[1].time.text
-        logging.info(f"Got date: {date}")
-
         # review content
         content = cur_review.contents[1].p.text
         logging.info(f"Got review text: {content}")
@@ -59,9 +55,8 @@ def scrape_from_review_list(review_list, result, max_review_num):
         # store the features into cur_review_dict
         cur_review_dict["id"] = REVIEW_COUNTER
         cur_review_dict["name"] = name
-        cur_review_dict["date"] = date
-        cur_review_dict["content"] = content
         cur_review_dict["rating"] = rating
+        cur_review_dict["content"] = content
 
         # add this customer's review to result
         result["reviews"].append(cur_review_dict)
@@ -157,7 +152,7 @@ def scrape_sendo_by_url(driver, url, max_review_num, review_check_num, review_wa
         logging.info("Review is not found, scraping product name only")
         result = {
             "product_name": None,
-            "average_rating" : None,
+            "avg_rating" : None,
             "source" : "sendo",
             "reviews" : []
         }
@@ -176,7 +171,7 @@ def scrape_sendo_by_url(driver, url, max_review_num, review_check_num, review_wa
         # create a dictionary to store review information
         result = {
             "product_name": None,
-            "average_rating" : None,
+            "avg_rating" : None,
             "source" : "sendo",
             "reviews" : []
         }
@@ -195,7 +190,9 @@ def scrape_sendo_by_url(driver, url, max_review_num, review_check_num, review_wa
 
         # average rating
         avg = soup.find(class_="_39a-7b5c89").text
-        result["average_rating"] = avg
+        if avg:
+            avg = float(avg.split("/")[0])
+        result["avg_rating"] = avg
         logging.info(f"Got average rating: {avg}")
 
         # get the reviews
@@ -281,7 +278,7 @@ if __name__ == "__main__":
     # start a webdriver
     start = time.time()
     driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
-    result = scrape_sendo(driver, product_name, max_review_num=5, verbose=True)
+    result = scrape_sendo(driver, product_name, max_review_num=2, verbose=True)
     driver.quit()
     print("Time taken: ", time.time() - start)
     pretty = json.dumps(result, indent=4, ensure_ascii=False)
