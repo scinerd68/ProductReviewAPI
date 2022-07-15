@@ -44,7 +44,7 @@ def scrape_lazada(driver, url, max_comment = 5):
                 review['id']=review_count
                 review_count +=1
                 review['name'] = details[0].text[3:]
-                review['status'] = details[1].text
+                # review['status'] = details[1].text
                 # review['date'] = product.find_element(By.CSS_SELECTOR, "[class='title right']").text
                 review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[src='//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png']"))
                 review['content'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
