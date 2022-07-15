@@ -33,7 +33,7 @@ def scrape_lazada(driver, url, max_comment = 5):
             product_reviews = WebDriverWait(driver,2).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,"[class='item']")))
         except:
             break
-        result['avg_rating'] = driver.find_element(By.CSS_SELECTOR, "[class='score-average']").text
+        result['avg_rating'] = float(driver.find_element(By.CSS_SELECTOR, "[class='score-average']").text)
 
         # Get product review
         for product in product_reviews:
@@ -47,7 +47,7 @@ def scrape_lazada(driver, url, max_comment = 5):
                 review['status'] = details[1].text
                 review['date'] = product.find_element(By.CSS_SELECTOR, "[class='title right']").text
                 review['rating'] = len(product.find_elements(By.CSS_SELECTOR, "[src='//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png']"))
-                review['review'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
+                review['content'] = product.find_element(By.CSS_SELECTOR, "[class='content']").text
                 if review != "" or review.strip():
                     # print(review, "\n")
                     result['reviews'].append(review)
