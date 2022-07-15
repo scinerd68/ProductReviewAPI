@@ -60,8 +60,8 @@ def scrape_from_review_list(review_list, result, max_review_num):
         cur_review_dict["id"] = REVIEW_COUNTER
         cur_review_dict["name"] = name
         cur_review_dict["date"] = date
-        cur_review_dict["content"] = content
         cur_review_dict["rating"] = rating
+        cur_review_dict["content"] = content
 
         # add this customer's review to result
         result["reviews"].append(cur_review_dict)
