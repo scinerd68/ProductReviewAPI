@@ -43,10 +43,6 @@ def scrape_from_review_list(review_list, result, max_review_num):
         name = cur_review.contents[1].strong.text
         logging.info(f"Got customer's name: {name}")
 
-        # review date
-        date = cur_review.contents[1].time.text
-        logging.info(f"Got date: {date}")
-
         # review content
         content = cur_review.contents[1].p.text
         logging.info(f"Got review text: {content}")
@@ -59,7 +55,6 @@ def scrape_from_review_list(review_list, result, max_review_num):
         # store the features into cur_review_dict
         cur_review_dict["id"] = REVIEW_COUNTER
         cur_review_dict["name"] = name
-        cur_review_dict["date"] = date
         cur_review_dict["rating"] = rating
         cur_review_dict["content"] = content
 
