@@ -8,8 +8,8 @@ body {
 
 /* Navigation bar */
 navbar {
-    background-color: #f9faf8;
-    color: #1f2937;
+    background-color: #1f2937;
+    color: #f9faf8;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -37,82 +37,65 @@ ul {
 }
 
 a {
-    color: #1f2937;
+    color: #f9faf8;
     text-decoration: none;
 }
 
 a:hover {
-    color: #1f2937;
+    color: #f9faf8;
 }
 
 /* Homepage */
 .homepage {
     display: flex;
     flex-direction: column;
-    background-color: #1f2937;
+    background-color: #f9faf8;
     flex-grow: 1;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
 }
 
 h1 {
-    color: #f9faf8;
+    color: #1f2937;
     font-size: 70px;
-    margin: 0;
+    font-weight: 600;
+    margin: 20px auto;
+}
+
+.description {
+    margin-left: 80px;
+    margin-right: 80px;
+    color: #1f1f1f;
+    font-size: 20px;
 }
 
 p {
-    color: #e5e7eb;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin: 0;
+}
+
+.logo-site {
+    height: 22px;
+    width: 22px;
+    margin-left: 5px;
+}
+
+#doc-link {
+    color: #1f2937;
+    font-size: 20px;
+    font-style: italic;
+}
+
+#doc-link:hover {
+    text-decoration: underline;
+}
+
+.site-link {
+    color: #1f2937;
     font-size: 20px;
 }
 
-#search-form {
-    display: flex;
-    flex-direction: row;
+.site-link:hover {
+    color: #1f2937;
+    text-decoration: underline;
 }
 
-.search-bar>input {
-    box-sizing: content-box;
-    width: 800px;
-    height: 30px;
-    font-size: 20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    border: 2px;
-    margin-right: 1px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-.select-site>select {
-    box-sizing: content-box;
-    width: 90px;
-    height: 30px;
-    font-size: 18px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border: 2px;
-    margin-right: 1px;
-    text-align: center;
-}
-
-.submit-button>input {
-    box-sizing: content-box;
-    width: 60px;
-    height: 30px;
-    font-size: 18px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 7px;
-    padding-left: 7px;
-    border: 2px;
-    background-color: #2ea66c;
-    color: #e5e7eb;
-    text-align: center;
-    border: 2px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
