@@ -20,22 +20,14 @@
   </navbar>
   <div class="homepage">
     <h1>Product Review API</h1>
-    <p>An API to easily get review of a product on multiple websites like Tiki, Shopee, Lazada, Sendo</p>
-    <form id="search-form" action="/review/byname" method="get">
-      <div class="search-bar">
-        <input placeholder="Search" name="name">
-      </div>
-      <div class="select-site">
-        <select name="site">
-          <option value="tiki">Tiki</option>
-          <option value="sendo">Sendo</option>
-          <option value="lazada">Lazada</option>
-        </select>
-      </div>
-      <div class="submit-button">
-        <input type="submit" value="Submit">
-      </div>
-    </form>
+    <div class="description">
+      <p>Product review API is an API that allows users to easily get reviews of products on multiple E-commerce websites.</p>
+      <p>The following websites are currently supported:</p>
+      <p><img src="../static/img/lazada.png" class="logo-site"> <a href="https://www.lazada.vn/" class="site-link" target="_blank">Lazada</a></p>
+      <p><img src="../static/img/sendo.png" class="logo-site"> <a href="https://www.sendo.vn/" class="site-link" target="_blank">Sendo</a></p>
+      <p><img src="../static/img/tiki.png" class="logo-site"> <a href="https://tiki.vn/" class="site-link" target="_blank">Tiki</a></p>
+      <p>Users can provide a link or a product name to the API and get the reviews of that product. For more detailed documentation go to <a href="/doc" id="doc-link">documentation.</a></p>
+    </div>
   </div>
 
 </body>

@@ -25,17 +25,43 @@
     <div style="font-size:16px;">Send HTTP requests to:</div>
     <div class="url">http://www.reviewapi.com/</div>
 
-    <!-- Api key -->
+    <!-- API key -->
     <h1>API key</h1>
     <hr>
-    <div>Send GET request to:</div>
-    <div class="url">http://www.reviewapi.com/new_api_key?device_name=[your_device]</div>
-    <div>to obtain API key</div>
+    <div>To generate new API key, send POST request with device name data to:</div>
+    <div class="url">http://www.reviewapi.com/new_api_key</div>
+    
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Parameters</th>
+          <th scope="col">Required</th>
+          <th scope="col">Default value</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row">device_name</td>
+          <td>Yes</td>
+          <td>&lt;empty&gt;</td>
+          <td>Device name correspond to the to be generated API key</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <!-- Parameter -->
+    <h2>Example:</h2>
+    <div class="code">
+      <div>import requests</div>
+      <div>key = requests.post("http://localhost:5000/new_api_key", data={'device_name': 'test1'})</div>
+      <div>print(key.json())</div>
+    </div>
+    <hr>
+
+    <!-- Parameters -->
     <h1>Parameters</h1>
     <hr>
-    <h2>Get review by URL</h2>
+    <h2>Get reviews by URL</h2>
     <div>Send GET request to:</div>
     <div class="url">http://www.reviewapi.com/byurl</div>
     <table class="table table-striped table-bordered">
@@ -75,7 +101,7 @@
           <td>No</td>
           <td></td>
           <td>5</td>
-          <td>Maximum number of reviews of the product, max = 20</td>
+          <td>Maximum number of reviews of the product, max = 10</td>
         </tr>
       </tbody>
     </table>
@@ -88,7 +114,7 @@
     </div>
     <hr>
 
-    <h2>Get review by product name</h2>
+    <h2>Get reviews by product name</h2>
     <div>Send GET request to:</div>
     <div class="url">http://www.reviewapi.com/byname</div>
     <table class="table table-striped table-bordered">
