@@ -37,9 +37,15 @@
       <input type="text" name="device_name">
       <input type="submit" value="Submit">
     </form>
-    {% if key != None %}
-    <div class="key">
-      {{ key }}
+    {% if warning != None %}
+    <div class="warning">
+      {{ warning }}
     </div>
+    {% else %}
+      {% if key != None %}
+      <div class="key">
+        {{ key }}
+      </div>
+      {% endif %}
     {% endif %}
   </div>
