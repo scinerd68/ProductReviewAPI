@@ -87,3 +87,8 @@ h2 {
     padding: 10px;
     margin-bottom: 20px;
 }
+
+#doc-link {
+    color: black;
+    text-decoration: underline;
+}

@@ -1,3 +1,4 @@
+from logging import warning
 from flask import Flask, render_template, request
 from flask_restful import Resource, Api
 from scrape.LazadaScraping import scrape_lazada, scrape_lazada_by_product
@@ -39,15 +40,15 @@ def api_key():
     if request.method == 'POST':
         device_name = request.form.get('device_name')
         if DeviceModel.find_by_name(device_name=device_name):
-            return {'message': f'A device with name {device_name} already exists.'}, 400
+            return render_template('generate_key.html', warning="Device name already existed! Please choose another name.")
 
         new_device = DeviceModel(
             device_name=device_name,
         )
         new_device.save_to_db()
         api_key = new_device.device_key
-        return render_template('generate_key.html', key=api_key)
-    return render_template('generate_key.html', key=None)
+        return render_template('generate_key.html', key=api_key, warning=None)
+    return render_template('generate_key.html', key=None, warning=None)
 
 
 def get_cache_path(type, query, site):
