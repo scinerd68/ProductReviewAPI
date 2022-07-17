@@ -110,9 +110,9 @@ class GetReviewByProductName(Resource):
         cache_exist = False
         if site != 'all':
             cache_exist, result = load_cache_path(cache_path, max_review, product_num)
+
         if cache_exist:
             return result
-
         else:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
@@ -173,11 +173,11 @@ class GetReviewByProductName(Resource):
 
             driver.quit()
 
-        # Only save cache of individual site not all sites
-        if site != 'all':
-            cache = {'date': datetime.strftime(date.today(), '%y %m %d'), 'result' : result, 'maxreview': max_review, 'productnum': product_num}
-            with open(cache_path, 'w', encoding='utf8') as json_file:
-                json.dump(cache, json_file, ensure_ascii=False)
+            # Only save cache of individual site not all sites
+            if site != 'all':
+                cache = {'date': datetime.strftime(date.today(), '%y %m %d'), 'result' : result, 'maxreview': max_review, 'productnum': product_num}
+                with open(cache_path, 'w', encoding='utf8') as json_file:
+                    json.dump(cache, json_file, ensure_ascii=False)
 
         return result
 
