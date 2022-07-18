@@ -123,7 +123,7 @@ class GetReviewByProductName(Resource):
                 result = scrape_sendo(driver=driver, input=product_name, max_review_num=max_review,
                                       product_num=product_num, verbose=True)
             elif site == 'lazada':
-                result = scrape_lazada_by_product(driver=driver, product_name=product_name, max_page=product_num,
+                result = scrape_lazada_by_product(driver=driver, input=product_name, max_page=product_num,
                                                   max_comment_per_page=max_review)['result']
             elif site == 'tiki':
                 result = scrape_tiki_by_name(driver=driver, input=product_name, product_num=product_num,
