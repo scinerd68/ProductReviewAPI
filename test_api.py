@@ -7,7 +7,7 @@ legit_api_key = 'ab837f0cf3f14b9a9fce78265dc45076'
 
 url = "https://www.sendo.vn/op-lung-iphone-6-plus-6s-plus-chong-soc-360-17878754.html"
 result = requests.get("http://localhost:5000/review/byname", params={"api_key":legit_api_key,
-                                                                     "name": "tủ lạnh LG",
+                                                                     "name": "tủ lạnh lg",
                                                                      "site": "all",
                                                                      "maxreview": 5,
                                                                      "productnum": 5})
