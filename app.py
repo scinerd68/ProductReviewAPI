@@ -106,13 +106,13 @@ class GetReviewByProductName(Resource):
         tiki_cache_path = get_cache_path('productname', product_name, 'tiki')
         sendo_cache_path = get_cache_path('productname', product_name, 'sendo')
         lazada_cache_path = get_cache_path('productname', product_name, 'lazada')
-        
-        cache_exist = False 
+
+        cache_exist = False
         if site != 'all':
             cache_exist, result = load_cache_path(cache_path, max_review, product_num)
+
         if cache_exist:
             return result
-
         else:
             chrome_options = Options()
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -127,7 +127,7 @@ class GetReviewByProductName(Resource):
                 result = scrape_sendo(driver=driver, input=product_name, max_review_num=max_review,
                                       product_num=product_num, verbose=True)
             elif site == 'lazada':
-                result = scrape_lazada_by_product(driver=driver, product_name=product_name, max_page=product_num,
+                result = scrape_lazada_by_product(driver=driver, input=product_name, max_page=product_num,
                                                   max_comment_per_page=max_review)['result']
             elif site == 'tiki':
                 result = scrape_tiki_by_name(driver=driver, input=product_name, product_num=product_num,
@@ -146,7 +146,7 @@ class GetReviewByProductName(Resource):
                     }
                     with open(sendo_cache_path, 'w', encoding='utf8') as json_file:
                         json.dump(sendo_cache, json_file, ensure_ascii=False)
-                result.extend(sendo_result) 
+                result.extend(sendo_result)
 
                 tiki_cache_exist, tiki_result = load_cache_path(tiki_cache_path, max_review, product_num)
                 if not tiki_cache_exist:
@@ -160,7 +160,7 @@ class GetReviewByProductName(Resource):
                     with open(tiki_cache_path, 'w', encoding='utf8') as json_file:
                         json.dump(tiki_cache, json_file, ensure_ascii=False)
                 result.extend(tiki_result)
-                
+
                 lazada_cache_exist, lazada_result = load_cache_path(lazada_cache_path, max_review, product_num)
                 if not lazada_cache_exist:
                     lazada_result = scrape_lazada_by_product(driver=driver, input=product_name, product_num=product_num,
@@ -178,7 +178,7 @@ class GetReviewByProductName(Resource):
             driver.quit()
 
             # Only save cache of individual site not all sites
-            if site != 'all': 
+            if site != 'all':
                 cache = {'date': datetime.strftime(date.today(), '%y %m %d'), 'result' : result, 'maxreview': max_review, 'productnum': product_num}
                 with open(cache_path, 'w', encoding='utf8') as json_file:
                     json.dump(cache, json_file, ensure_ascii=False)
@@ -199,11 +199,11 @@ class GetReviewByURL(Resource):
             return "Please provide an integer for 'maxreview' parameter", 400
         if max_review > 10:
             return "Request failed, maxreview must <= 10", 400
-        
+
         url_alias = get_url_alias(url)
         cache_path = get_cache_path('', url_alias, '')
         cache_exist = False
-        
+
         # Load cache if exist
         if os.path.exists(cache_path):
             with open(cache_path, encoding='utf-8') as f:
@@ -213,7 +213,7 @@ class GetReviewByURL(Resource):
             if (datetime.combine(date.today(), datetime.min.time()) - date_recorded) < timedelta(days = 15):
                 if max_review <= cache['maxreview']:
                     result = cache['result']
-                    result['reviews'] = cache['result']['reviews'][:max_review] 
+                    result['reviews'] = cache['result']['reviews'][:max_review]
                     cache_exist = True
                     return result
 
