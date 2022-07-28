@@ -15,7 +15,7 @@ from datetime import date, datetime, timedelta
 from urllib.parse import urlparse
 import os
 
-CHROME_DRIVER_PATH = 'D:/chromedriver.exe'
+# CHROME_DRIVER_PATH = 'D:/chromedriver.exe'
 
 app = Flask(__name__)
 api = Api(app)
@@ -115,9 +115,13 @@ class GetReviewByProductName(Resource):
             return result
         else:
             chrome_options = Options()
-            chrome_options.add_argument('--headless')
+            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--no-sandbox")
             chrome_options.add_argument('--disable-gpu')
-            driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
+            
+            driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
             if site == 'sendo':
                 result = scrape_sendo(driver=driver, input=product_name, max_review_num=max_review,
@@ -216,9 +220,12 @@ class GetReviewByURL(Resource):
         # Scrape if not exist
         if not cache_exist:
             chrome_options = Options()
-            chrome_options.add_argument('--headless')
+            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--no-sandbox")
             chrome_options.add_argument('--disable-gpu')
-            driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=chrome_options)
+            driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
             if site == 'sendo':
                 result = scrape_sendo(driver=driver, input=url, max_review_num=max_review)
